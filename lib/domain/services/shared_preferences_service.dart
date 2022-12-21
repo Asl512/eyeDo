@@ -1,9 +1,11 @@
+import 'package:eye_do/data/models/app_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesKeys {
   static const toStart = 'TOSTART';
   static const count = 'COUNT';
   static const exercise = 'EXERCISE';
+  static const theme = 'THEME';
 }
 
 class SharedPreferencesService {
@@ -56,5 +58,24 @@ class SharedPreferencesService {
     int? exercise = prefs.getInt(SharedPreferencesKeys.exercise);
     if (exercise == null) return 0;
     return exercise;
+  }
+
+  //THEME
+
+  Future<AppTheme> getTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? name = prefs.getString(SharedPreferencesKeys.theme);
+    if (name == null) return appThemes.first;
+    return appThemes.firstWhere((theme) => theme.name.name == name);
+  }
+
+  Future<bool> setTheme({required ThemeName name}) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.setString(SharedPreferencesKeys.theme, name.name);
+  }
+
+  Future<bool> removeTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.remove(SharedPreferencesKeys.theme);
   }
 }

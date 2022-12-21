@@ -1,6 +1,10 @@
+import 'package:eye_do/data/models/app_theme.dart';
+import 'package:eye_do/domain/services/theme_service.dart';
 import 'package:eye_do/ui/res/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatelessWidget {
   final Function()? onBack;
@@ -9,6 +13,14 @@ class SettingsScreen extends StatelessWidget {
     Key? key,
     this.onBack,
   }) : super(key: key);
+
+  void contactDeveloper() async {
+    final url = Uri.parse('https://vk.com/astraslan');
+    await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +47,7 @@ class SettingsScreen extends StatelessWidget {
                   _Sound(active: true),
                   _Vibration(active: false),
                   _Notification(active: true),
+                  _ChoiceEye(),
                 ],
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.33),
@@ -43,6 +56,7 @@ class SettingsScreen extends StatelessWidget {
               ),
               const SizedBox(height: 30),
               GestureDetector(
+                onTap: contactDeveloper,
                 child: const Text('Связаться с разрабочиком'),
               ),
             ],
@@ -87,7 +101,7 @@ class _SoundState extends State<_Sound> {
         CupertinoSwitch(
           activeColor: AppColor.whiteColor,
           trackColor: AppColor.labelTertiary,
-          thumbColor: Theme.of(context).primaryColor,
+          thumbColor: Theme.of(context).secondaryHeaderColor,
           value: active,
           onChanged: onChanged,
         ),
@@ -130,7 +144,7 @@ class _VibrationState extends State<_Vibration> {
         CupertinoSwitch(
           activeColor: AppColor.whiteColor,
           trackColor: AppColor.labelTertiary,
-          thumbColor: Theme.of(context).primaryColor,
+          thumbColor: Theme.of(context).secondaryHeaderColor,
           value: active,
           onChanged: onChanged,
         ),
@@ -169,15 +183,108 @@ class _NotificationState extends State<_Notification> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Text('Напоминания'),
+        const Text('Уведомления'),
         CupertinoSwitch(
           activeColor: AppColor.whiteColor,
           trackColor: AppColor.labelTertiary,
-          thumbColor: Theme.of(context).primaryColor,
+          thumbColor: Theme.of(context).secondaryHeaderColor,
           value: active,
           onChanged: onChanged,
         ),
       ],
+    );
+  }
+}
+
+class _ChoiceEye extends StatelessWidget {
+  const _ChoiceEye({Key? key}) : super(key: key);
+
+  void openModalBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) => const _SelectEye(),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        const Text('Выберите цвет глаз'),
+        GestureDetector(
+          onTap: () => openModalBottomSheet(context),
+          child: Container(
+            height: 30,
+            width: 30,
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+              borderRadius: BorderRadius.circular(500),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _SelectEye extends StatefulWidget {
+  const _SelectEye({Key? key}) : super(key: key);
+
+  @override
+  State<_SelectEye> createState() => _SelectEyeState();
+}
+
+class _SelectEyeState extends State<_SelectEye> {
+  late ThemeService themeService;
+
+  @override
+  void initState() {
+    super.initState();
+    themeService = Provider.of<ThemeService>(context, listen: false);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        vertical: 10,
+        horizontal: 16,
+      ),
+      decoration: BoxDecoration(
+        color: Theme.of(context).backgroundColor,
+      ),
+      child: Wrap(
+        children: [
+          for (var eye in appThemes)
+            GestureDetector(
+              onTap: () {
+                themeService.setTheme(appTheme: eye);
+                Navigator.of(context).pop();
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                color: Theme.of(context).backgroundColor,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    if (eye.name == ThemeName.brown) const Text('Карий'),
+                    if (eye.name == ThemeName.green) const Text('Зеленый'),
+                    if (eye.name == ThemeName.blue) const Text('Голубой'),
+                    Container(
+                      height: 30,
+                      width: 30,
+                      decoration: BoxDecoration(
+                        color: eye.mainColor,
+                        borderRadius: BorderRadius.circular(500),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+        ],
+      ),
     );
   }
 }

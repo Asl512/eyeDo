@@ -1,11 +1,10 @@
-import 'package:eye_do/domain/redux/store.dart';
 import 'package:eye_do/domain/services/locator_service.dart';
+import 'package:eye_do/domain/services/theme_service.dart';
 import 'package:eye_do/router.dart';
 import 'package:eye_do/ui/res/theme.dart';
 import 'package:eye_do/ui/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:overlay_support/overlay_support.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,18 +23,19 @@ class FApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreProvider<AppState>(
-      store: locator.store,
-      child: OverlaySupport.global(
-        child: MaterialApp(
-          theme: themeData,
+    return ChangeNotifierProvider<ThemeService>(
+      create: (context) => ThemeService(sharedPreferencesService: locator.sharedPreferencesService),
+      builder: (context, child) {
+        final themeService = Provider.of<ThemeService>(context);
+        return MaterialApp(
+          theme: themeData(theme: themeService.appTheme),
           navigatorKey: locator.navigatorKey,
           title: 'Eye Do!',
           home: const SplashScreen(),
           onGenerateRoute: AppRouter.onGenerateRouters,
           debugShowCheckedModeBanner: false,
-        ),
-      ),
+        );
+      },
     );
   }
 }

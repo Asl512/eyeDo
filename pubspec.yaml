@@ -34,11 +34,10 @@ dependencies:
   sensors_plus: 2.0.1
   drift: ^2.2.0
   flutter_svg: ^1.1.2
+  url_launcher:
   flutter_launcher_icons: ^0.10.0
-  flutter_redux: ^0.10.0
   freezed_annotation: ^2.1.0
   get_it: ^7.2.0
-  overlay_support: ^2.0.1
   redux: ^5.0.0
   sqlite3_flutter_libs: ^0.5.10
   shared_preferences: ^2.0.15
@@ -48,6 +47,8 @@ dependencies:
   json_serializable: ^6.3.1
   drift_dev: ^2.2.0+1
   build_runner: ^2.2.0
+  provider: ^6.0.3
+  graphic: ^1.0.1
   freezed: ^2.1.0+1
   flutter_local_notifications: ^9.6.0
   path_provider: ^2.0.11

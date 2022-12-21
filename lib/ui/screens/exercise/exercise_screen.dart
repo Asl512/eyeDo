@@ -5,7 +5,6 @@ import 'package:eye_do/data/models/exercise.dart';
 import 'package:eye_do/data/repositories/mock_exercise_repository.dart';
 import 'package:eye_do/domain/services/get_it_service.dart';
 import 'package:eye_do/domain/services/navigator_service.dart';
-import 'package:eye_do/domain/services/shared_preferences_service.dart';
 import 'package:eye_do/ui/res/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -93,7 +92,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
               style: Theme.of(context)
                   .textTheme
                   .headline1!
-                  .copyWith(color: Theme.of(context).primaryColor),
+                  .copyWith(color: Theme.of(context).secondaryHeaderColor),
             ),
             if (!relax)
               Opacity(
@@ -183,7 +182,7 @@ class _Status extends StatelessWidget {
       child: Text(
         title,
         style: TextStyle(
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).secondaryHeaderColor,
         ),
       ),
     );

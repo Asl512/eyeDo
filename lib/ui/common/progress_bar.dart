@@ -39,14 +39,14 @@ class _ProgressBarState extends State<ProgressBar> {
             Container(
               height: 30,
               width: MediaQuery.of(context).size.width * 0.63 * (count / 30),
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(40),
                   topLeft: Radius.circular(50),
                   bottomLeft: Radius.circular(50),
                   bottomRight: Radius.circular(40),
                 ),
-                color: AppColor.primaryColor,
+                color: Theme.of(context).secondaryHeaderColor,
               ),
             ),
             Container(

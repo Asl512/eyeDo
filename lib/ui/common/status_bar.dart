@@ -33,7 +33,7 @@ class StatusBar extends StatelessWidget {
                 height: 7,
                 width: 7,
                 decoration: BoxDecoration(
-                  color: i == active ? Theme.of(context).primaryColor : const Color(0XFF5A5A5A),
+                  color: i == active ? Theme.of(context).secondaryHeaderColor : const Color(0XFF5A5A5A),
                   borderRadius: BorderRadius.circular(50),
                 ),
               ),

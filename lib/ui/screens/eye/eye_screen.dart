@@ -45,6 +45,13 @@ class _EyeScreenState extends State<EyeScreen> {
     super.dispose();
   }
 
+  void recommendation() {
+    showDialog(
+      context: context,
+      builder: (_) => const _Recommendation(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -99,7 +106,7 @@ class _EyeScreenState extends State<EyeScreen> {
                       width: 200,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(500),
-                        color: const Color(0XFF517A46),
+                        color: Theme.of(context).primaryColor,
                       ),
                     ),
                   ),
@@ -127,6 +134,7 @@ class _EyeScreenState extends State<EyeScreen> {
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.15),
               GestureDetector(
+                onTap: recommendation,
                 child: const Text(
                   'Рекомендация',
                   style: TextStyle(fontSize: 13),
@@ -136,6 +144,36 @@ class _EyeScreenState extends State<EyeScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _Recommendation extends StatelessWidget {
+  const _Recommendation({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 50),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 20,
+          ),
+          decoration: BoxDecoration(
+            color: AppColor.whiteColor,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Text(
+            'Зарядка для глаз во время работы перед монитором важна не менее, чем разминки спины после дня в полусогнутом положении. 2-3 минуты помогают вернутьтонус глазным мышцам.\n\nВ комплексе набор упражнений,во время которых нужносмотреть в направления,указываемые точкой.\n\nХорошего зрения!',
+            style: TextStyle(color: Theme.of(context).backgroundColor),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ],
     );
   }
 }

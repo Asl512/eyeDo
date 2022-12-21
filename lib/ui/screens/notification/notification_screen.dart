@@ -1,12 +1,15 @@
+import 'package:eye_do/data/models/app_theme.dart';
 import 'package:eye_do/domain/services/get_it_service.dart';
 import 'package:eye_do/domain/services/local_notification_service.dart';
 import 'package:eye_do/domain/services/navigator_service.dart';
 import 'package:eye_do/domain/services/shared_preferences_service.dart';
+import 'package:eye_do/domain/services/theme_service.dart';
 import 'package:eye_do/ui/res/assets.dart';
 import 'package:eye_do/ui/res/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({Key? key}) : super(key: key);
@@ -21,6 +24,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   late DateTime dateTime;
   late LocalNotificationService localNotificationService;
   late SharedPreferencesService sharedPreferencesService;
+  late ThemeService themeService;
 
   @override
   void initState() {
@@ -30,6 +34,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
     localNotificationService = getItService.localNotificationService;
     navigatorService = getItService.navigatorService;
     sharedPreferencesService.plusCount();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    themeService = Provider.of<ThemeService>(context);
   }
 
   void onChanged(DateTime time) {
@@ -53,7 +63,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
       body: Center(
         child: Column(
           children: [
-            SvgPicture.asset(AppLikes.green),
+            if (themeService.appTheme.name == ThemeName.green) SvgPicture.asset(AppLikes.green),
+            if (themeService.appTheme.name == ThemeName.blue) SvgPicture.asset(AppLikes.blue),
+            if (themeService.appTheme.name == ThemeName.brown) SvgPicture.asset(AppLikes.brown),
             const SizedBox(height: 80),
             const Text(
               'Вы молодец!\nТеперь немного\nотдохните от гаджетов.',

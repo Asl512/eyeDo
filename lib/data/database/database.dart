@@ -67,7 +67,7 @@ class EyeDoDataBase extends _$EyeDoDataBase {
     }
   }
 
-  Future<Map<String, int>> getTime() async {
+  Future<Map<String, int>> getAllTime() async {
     Map<String, int> map = {};
     final result = await (select(timeTable).get());
     if (result.isEmpty) return map;
@@ -75,6 +75,14 @@ class EyeDoDataBase extends _$EyeDoDataBase {
       map.addAll({e.dateString: e.count});
     }
     return map;
+  }
+
+  Future<int> getTime({required DateTime dateTime}) async {
+    final result = await (select(timeTable)
+      ..where((t) => t.dateString.isIn([convertDate(date: dateTime)])))
+        .getSingleOrNull();
+    if (result == null) return 0;
+    return result.count;
   }
 
   @override
