@@ -91,12 +91,12 @@ class _EyeScreenState extends State<EyeScreen> {
                     ),
                   ),
                   Positioned(
-                    top: (y * 10) + 90 > 90
+                    top: (y * 10) + 50 > 90
                         ? 90
-                        : (y * 10) + 90 < 0
+                        : (y * 10) + 50 < 0
                             ? 0
-                            : (y * 10) + 90,
-                    right: (x * 10) + 50 < 9
+                            : (y * 10) + 50,
+                    left: (x * 10) + 50 < 9
                         ? 9
                         : (x * 10) + 50 > 90
                             ? 90
@@ -111,8 +111,8 @@ class _EyeScreenState extends State<EyeScreen> {
                     ),
                   ),
                   Positioned(
-                    top: (y * 15) + 140 > 135 ? 135 : (y * 15) + 140,
-                    right: (x * 10) + 80 > 110 ? 110 : (x * 10) + 80,
+                    top: (y * 15) + 80 > 135 ? 135 : (y * 15) + 80,
+                    left: (x * 10) + 80 > 110 ? 110 : (x * 10) + 80,
                     child: Container(
                       height: 150,
                       width: 150,

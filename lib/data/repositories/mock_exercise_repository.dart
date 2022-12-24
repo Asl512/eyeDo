@@ -7,25 +7,25 @@ class MockExerciseRepository implements ExerciseRepository {
     return [
       Exercise(
         id: 1,
-        timer: 5,
+        timer: 30,
         image: 'res/exercise/one.gif',
         title: 'По правой диагонали',
       ),
       Exercise(
         id: 2,
-        timer: 5,
+        timer: 30,
         image: 'res/exercise/two.gif',
         title: 'По левой диагонали',
       ),
       Exercise(
         id: 2,
-        timer: 5,
+        timer: 30,
         image: 'res/exercise/three.gif',
         title: 'Вправо - влево',
       ),
       Exercise(
         id: 2,
-        timer: 5,
+        timer: 30,
         image: 'res/exercise/four.gif',
         title: 'Вверх - вниз',
       ),

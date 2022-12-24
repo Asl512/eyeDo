@@ -22,6 +22,11 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
+  void estimate() async {
+    final url = Uri.parse('https://play.google.com/store/games?hl=ru&gl=US');
+    await launchUrl(url);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -52,6 +57,7 @@ class SettingsScreen extends StatelessWidget {
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.33),
               GestureDetector(
+                onTap: estimate,
                 child: const Text('Оценить'),
               ),
               const SizedBox(height: 30),
