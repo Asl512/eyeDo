@@ -21,7 +21,7 @@ class AppRouter {
 
     final routes = <String, WidgetBuilder>{
       splash: (_) => const SplashScreen(),
-      eye: (_) => EyeScreen(),
+      eye: (_) => const EyeScreen(),
       schedule: (_) => const ScheduleScreen(),
       notification: (_) => const NotificationScreen(),
       exercise: (_) => const ExerciseScreen(),
